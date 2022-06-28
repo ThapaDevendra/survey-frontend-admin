@@ -3,9 +3,14 @@ import { createWebHistory, createRouter } from "vue-router";
 const routes = [
     {
         path: '/',
-        alias: '/users',
-        name: 'users',
-        component: () => import('./views/LogIn.vue')
+        alias: '/login',
+        name: 'login',
+        component: () => import('./components/LogIn.vue')
+    },
+    {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('./components/Dashboard.vue')
     }
 ];
 

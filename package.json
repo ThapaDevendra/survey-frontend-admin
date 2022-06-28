@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdi/font": "^6.7.96",
+    "@vuetify/vite-plugin": "^1.0.0-alpha.11",
     "axios": "^0.27.2",
     "jquery": "^3.6.0",
     "url": "^0.11.0",
