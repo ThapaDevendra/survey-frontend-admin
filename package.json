@@ -3,15 +3,24 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "serve": "vite preview --port 8081",
+    "dev": "vite --port 3001",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "@mdi/font": "^6.7.96",
+    "@vuetify/vite-plugin": "^1.0.0-alpha.11",
+    "axios": "^0.27.2",
+    "jquery": "^3.6.0",
+    "url": "^0.11.0",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.16",
+    "vuetify": "^3.0.0-beta.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
-    "vite": "^2.9.9"
+    "vite": "^2.9.9",
+    "vue-cli-plugin-vuetify": "~2.5.1"
   }
 }
