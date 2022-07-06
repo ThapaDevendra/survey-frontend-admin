@@ -11,7 +11,18 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('./components/Dashboard.vue')
+    },
+    {
+        path: '/user/all',
+        name: 'allusers',
+        component: () => import("./views/AllUsers.vue")
+    },
+    {
+        path: '/user/view/:id',
+        name: 'viewUser',
+        component: () => import("./views/ViewUser.vue")
     }
+    
 ];
 
 const router = createRouter({

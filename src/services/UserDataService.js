@@ -1,9 +1,10 @@
 import http from '../http-common.js';
 
 class UserDataService{
-    getAllUser(){
+    getAllUsers(){
        return http.get('/users/');
     }
+
 }
 
 export default new UserDataService();
