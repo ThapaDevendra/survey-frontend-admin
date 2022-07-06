@@ -9,10 +9,13 @@
                      <v-card-text>
                         <v-form>
                            <v-text-field
+                              id = 'email'
                               prepend-icon="mdi-account-circle"
-                              name="login"
-                              label="Login"
+                              name="email"
+                              label="Email"
                               type="text"
+                              v-model="user.email"
+                              required
                            ></v-text-field>
                            <v-text-field
                               id="password"
@@ -20,12 +23,15 @@
                               name="password"
                               label="Password"
                               type="password"
+                              v-model="user.password"
+                              required
                            ></v-text-field>
+                           <p>{{message}}</p>
                         </v-form>
                      </v-card-text>
                   <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn type="submit" class="mt-4" color="blue" >Login</v-btn>
+                      <v-btn type="submit" class="mt-4" color="blue" @click="submit">Login</v-btn>
                   </v-card-actions>
                 </v-card>
         </v-container>
@@ -35,21 +41,33 @@
 import UserDataService from '../services/UserDataService.js' 
 export default {
    name: 'Login',
-   props: {
-      users: []
+   data() {
+      return{
+         user: {
+            email: '',
+            password: ''            
+         },
+         submitted: false,
+         message:''
+      }
    },
    methods:{
-    getUsers() {
-      UserDataService.getAllUser().then(res => {
-         //this.users = res.data;
-         console.log("hellp", res.data)
+      async submit(){
+      var data = {email: this.user.email, password: this.user.password};
+      await UserDataService.userLogIn(data).then(res => {
+         if(res.data.role === 'SuperAdmin')
+         {
+            this.$router.push({name: 'dashboard' })
+            this.submitted=true;
+            this.user={};
+         }
       }).catch(err => {
-         console.log(err);
-      });
+            console.log(err);
+            this.message = err.response.data;
+      })
     }
    },
    mounted(){
-      this.getUsers();
    },
 };
 </script>
