@@ -5,6 +5,13 @@ class UserDataService{
        return http.get('/users/');
     }
 
+    adminuserLogIn(data){
+       return http.post('/users/login', data);
+    }
+
+    createAdminUser(data){
+      return http.post('/users/', data)
+    }
 }
 
 export default new UserDataService();

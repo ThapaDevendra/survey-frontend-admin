@@ -8,19 +8,14 @@ const routes = [
         component: () => import('./components/LogIn.vue')
     },
     {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: () => import('./components/Dashboard.vue')
+        path: '/super-admindashboard',
+        name: 'adminList',
+        component: () => import('./views/AdminList.vue')
     },
     {
-        path: '/user/all',
-        name: 'allusers',
-        component: () => import("./views/AllUsers.vue")
-    },
-    {
-        path: '/user/view/:id',
-        name: 'viewUser',
-        component: () => import("./views/ViewUser.vue")
+        path: '/super-admindashboard/addAdmin',
+        name: 'addAdmin',
+        component: () => import('./views/AddAdmin.vue')
     }
     
 ];
