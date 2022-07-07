@@ -4,6 +4,9 @@ class UserDataService{
     getAllUsers(){
        return http.get('/users/');
     }
+    delete(id) {
+        return http.delete(`/users/${id}`);
+    }
 
 }
 
