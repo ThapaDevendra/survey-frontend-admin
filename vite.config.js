@@ -5,7 +5,7 @@ import vuetify from '@vuetify/vite-plugin'
 const path = require('path');
 // https://vitejs.dev/config/
 export default defineConfig({
-  //base: process.env.NODE_ENV === 'development' ? '' : '/survey-frontend-admin/',
+  base: process.env.NODE_ENV === 'development' ? '' : '/survey-frontend/',
   plugins: [
     vue(),
     vuetify({autoImport: true})
