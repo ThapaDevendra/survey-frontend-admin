@@ -4,7 +4,7 @@ on:
     pull_request:
         types : [closed]
         branches:
-            - develop
+            - dev
 
 jobs:
     aws-deploy:
@@ -12,7 +12,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
               with:
-                  ref: develop
+                  ref: dev
             - uses: actions/setup-node@v1
             - run: npm install
             - run: npm run build
@@ -22,6 +22,6 @@ jobs:
                     SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
                     ARGS: "-rltgoDzvO --delete"
                     SOURCE: "dist/"
-                    REMOTE_HOST: "todo.eaglesoftwareteam.com"
+                    REMOTE_HOST: "ec2-18-223-188-246.us-east-2.compute.amazonaws.com"
                     REMOTE_USER: ubuntu
-                    TARGET: "/var/www/html/todoapp-vue"
+                    TARGET: "/var/www/html/survey-frontend-admin"
