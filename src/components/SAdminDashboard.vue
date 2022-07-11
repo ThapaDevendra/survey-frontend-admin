@@ -1,13 +1,18 @@
 <template>
- <h2>Welcome to Super Admin page</h2> 
+  <h2>This is Super Admin dashboard</h2>
 </template>
 
 
-<script setup>
+<script >
 
-defineProps({
-  msg: String
-})
+export default{
+  data(){
+    return{}
+  },
+  methods:{
+   
+  }
+}
 
 </script>
 <style scoped>

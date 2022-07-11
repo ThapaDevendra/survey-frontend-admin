@@ -8,10 +8,16 @@ const routes = [
         component: () => import('./components/LogIn.vue')
     },
     {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: () => import('./components/SAdminDashboard.vue')
+        path: '/super-admindashboard',
+        name: 'adminList',
+        component: () => import('./views/AdminList.vue')
+    },
+    {
+        path: '/super-admindashboard/addAdmin',
+        name: 'addAdmin',
+        component: () => import('./views/AddAdmin.vue')
     }
+    
 ];
 
 const router = createRouter({

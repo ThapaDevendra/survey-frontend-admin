@@ -1,41 +1,37 @@
 <template>
-  <v-app >
-    <v-app-bar 
-      >
+  <v-app>
+    <v-app-bar app color='green'>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-btn>Dashboard</v-btn>
-      <v-app-bar-title><h2>Survey Creator</h2></v-app-bar-title>
+      <v-app-bar-title>
+        <h2>Survey Creator</h2>
+      </v-app-bar-title>
       <v-spacer></v-spacer>
-      <v-btn>Log Out</v-btn>
-      <v-btn 
-        icon>
+      <v-row v-if="this.username">
+        <v-col>{{ this.role }}</v-col>
+        <v-col>{{ this.username }}</v-col>
+        <v-col>
+          <v-btn text class="mr-2" @click="logoutUser">Logout</v-btn>
+        </v-col>
+      </v-row>
+      <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-     <v-menu
-        left
-        bottom
-      >
+      <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            icon
-            v-bind="attrs"
-          >
+          <v-btn icon v-bind="attrs">
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
 
         <v-list>
-          <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
-          >
+          <v-list-item v-for="n in 5" :key="n" @click="() => { }">
             <v-list-item-title>Option {{ n }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
     </v-app-bar>
-      <v-main>
+    <v-main>
       <v-container fluid>
         <router-view />
       </v-container>
@@ -44,18 +40,46 @@
 </template>
 
 <script>
-import Login from './components/LogIn.vue'
+import Login from "./components/LogIn.vue"
 
-export default{
+
+export default {
   name: 'app',
-  data: () =>({
+  data() {
+    return {
+      username: '',
+      role: ''
+    }
 
-  }),
+  },
+  methods: {
+    logoutUser() {
+      this.$router.push({ name: 'login' });
+      this.username = '',
+        this.role = ''
+    }
+  },
+  watch: {
+    $route(to, from) {
+      if (to.path == '/super-admindashboard' && from.path == '/') {
+        this.username = this.$route.params.username;
+        this.role = this.$route.params.role;
+      }
+      // console.log('this is to path',to.path);
+      // console.log('this is from path', from.path)
+    }
+  },
+  created() {
+
+  },
   component: {
     Login
   },
-  computed:{
+  mounted() {
+
+    console.log('this is data', this.username)
   }
+
 };
 </script>
 

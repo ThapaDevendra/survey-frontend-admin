@@ -1,12 +1,16 @@
 import http from '../http-common.js';
 
 class UserDataService{
-    getAllUser(){
+    getAllUsers(){
        return http.get('/users/');
     }
 
-    userLogIn(data){
+    adminuserLogIn(data){
        return http.post('/users/login', data);
+    }
+
+    createAdminUser(data){
+      return http.post('/users/', data)
     }
 }
 
