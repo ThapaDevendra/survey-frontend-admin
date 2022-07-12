@@ -16,6 +16,16 @@ const routes = [
         path: '/super-admindashboard/addAdmin',
         name: 'addAdmin',
         component: () => import('./views/AddAdmin.vue')
+    },
+    {
+        path: '/super-admindashboard/viewAdmin',
+        name: 'viewAdmin',
+        component: () => import('./views/AddAdmin.vue')
+    },
+    {
+        path: '/super-admindashboard/editAdmin/:id',
+        name: 'edit',
+        component: () => import('./views/EditAdmin.vue')
     }
     
 ];
