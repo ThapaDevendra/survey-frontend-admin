@@ -1,7 +1,5 @@
 <template>
   <h1>Users List</h1>
-  <h4>{{ message }}</h4>
-
   <v-row>
     <v-col cols="12" sm="2">
       <v-btn color="success" @click="searchUsers"> Search </v-btn>
@@ -11,17 +9,23 @@
     </v-col>
   </v-row>
   <v-row>
-    <v-col cols="9" sm="2">
+    <v-col cols="12" sm="3">
       <span class="text-h6">Name</span>
     </v-col>
-    <v-col cols="9" sm="1">
+    <v-col cols="12" sm="2">
       <span class="text-h6">Edit</span>
     </v-col>
-    <v-col cols="9" sm="1">
+    <v-col cols="12" sm="2">
       <span class="text-h6">Delete</span>
     </v-col>
+    <v-col cols="12" sm="2">
+      <span class="text-h6">Email</span>
+    </v-col>
+    <v-col cols="12" sm="2">
+      <v-btn class="btn btn-primary" @click="addNewAdmin">Add New Admin</v-btn>
+    </v-col> 
   </v-row>
-  <UserDisplay
+  <SAdminDashboard
     v-for="user in users"
     :key="user.id"
     :user="user"
@@ -29,12 +33,10 @@
     @updateUser="goEdit(user)"
     @viewUser="goView(user)"
   />
-
-  <v-btn @click="removeAllUsers"> Remove All </v-btn>
 </template>
 <script>
-import UserDataService from "../services/UserDataService";
-import UserDisplay from "@/components/UserDisplay.vue";
+import UserDataService from "../../services/UserDataService";
+import SAdminDashboard from "@/components/SAdminDashboard.vue";
 export default {
   name: "user-list",
   data() {
@@ -43,13 +45,15 @@ export default {
       currentUser: null,
       currentIndex: -1,
       username: "",
-      message: "Search, Edit or Delete Users",
     };
   },
   components: {
-    UserDisplay,
+    SAdminDashboard,
   },
   methods: {
+    async addNewAdmin() {
+      await this.$router.push({ name: "addAdmin" });
+    },
     goEdit(user) {
       this.$router.push({ name: "edit", params: { id: user.id } });
     },
