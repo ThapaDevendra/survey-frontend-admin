@@ -31,12 +31,14 @@
     :user="user"
     @deleteUser="goDelete(user)"
     @updateUser="goEdit(user)"
-    @viewUser="goView(user)"
+    @sendEmail="goSendEmail(user)"
   />
 </template>
 <script>
 import UserDataService from "../../services/UserDataService";
 import SAdminDashboard from "@/components/SAdminDashboard.vue";
+import emailjs from 'emailjs-com';
+
 export default {
   name: "user-list",
   data() {
@@ -65,6 +67,14 @@ export default {
         .catch((e) => {
           this.message = e.response.data.message;
         });
+    },
+    goSendEmail(user){
+      var loginInfo = {
+        to_name: user.username,
+        from_name: 'Survey Creator',
+        message: `your email: ${user.email}, your password: Survey`
+      }
+      emailjs.send('service_survey','template_ah6dg3e',loginInfo,'yV9AlYGCoR5id2Enh')
     },
     retrieveUsers() {
       UserDataService.getAllUsers()

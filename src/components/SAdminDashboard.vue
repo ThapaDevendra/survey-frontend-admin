@@ -36,6 +36,9 @@ export default {
     updateUser() {
       this.$emit("updateUser");
     },
+    sendEmail(){
+      this.$emit('sendEmail');
+    },
   },
 };
 </script>
