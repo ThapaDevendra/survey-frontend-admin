@@ -56,17 +56,18 @@ export default {
     logoutUser() {
       this.$router.push({ name: 'login' });
       this.username = '',
-        this.role = ''
+      this.role = '',
+      this.$cookies.remove('token')  // return this
+      this.$cookies.remove('user')
+      this.$cookies.remove('role')
     }
   },
   watch: {
     $route(to, from) {
       if (to.path == '/super-admindashboard' && from.path == '/') {
-        this.username = this.$route.params.username;
-        this.role = this.$route.params.role;
+        this.username = this.$cookies.get('user');
+        this.role =  this.$cookies.get('role');
       }
-      // console.log('this is to path',to.path);
-      // console.log('this is from path', from.path)
     }
   },
   created() {

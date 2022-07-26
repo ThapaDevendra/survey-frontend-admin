@@ -13,7 +13,6 @@
           ></v-text-field>
           <v-text-field v-model="user.email" label="E-mail" required>
           </v-text-field>
-
           <v-text-field
             v-model="user.role"
             :items="items"
@@ -50,7 +49,7 @@
 </template>
 
 <script>
-import UserDataService from "../services/UserDataService";
+import UserDataService from "@/services/UserDataService";
 export default {
   name: "updateAdmin",
   data() {

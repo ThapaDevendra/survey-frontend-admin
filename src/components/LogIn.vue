@@ -43,14 +43,14 @@ export default {
       async submit() {
          var data = { email: this.user.email, password: this.user.password };
          await UserDataService.adminuserLogIn(data).then(res => {
-            const username = res.data.username;
-            const role = res.data.role;
-            if (role === 'SuperAdmin') {
-               this.$router.push({ name: 'adminList', params: { role: role, username: username } })
+            this.$cookies.set('user', res.data.username);
+            this.$cookies.set('role', res.data.role);
+            this.$cookies.set('token', res.data.token);
+            if (res.data.role === 'SuperAdmin') {
+               this.$router.push({ name: 'adminList' })
                this.submitted = true;
                this.user = {};
             }
-            console.log('login user', role, username)
          }).catch(err => {
             console.log(err);
             this.message = err.response.data;
