@@ -13,7 +13,6 @@
           ></v-text-field>
           <v-text-field v-model="user.email" label="E-mail" required>
           </v-text-field>
-
           <v-text-field
             v-model="user.role"
             :items="items"
