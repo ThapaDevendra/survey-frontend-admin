@@ -18,6 +18,6 @@ export default[
     {
         path: "/admindashboard/surveyResponses",
         name: "surveyResponse",
-        component: () => import("./views/Admin/SurveyResponses.vue"),
+        component: () => import("@/views/Admin/SurveyResponses.vue"),
       },
 ]
