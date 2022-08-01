@@ -3,40 +3,41 @@
     <v-col cols="9" sm="3">
       <span
         ><router-link
-          :to="{ name: 'viewAdmin', params: { id: user.id } }"
-          >{{ user.username }}</router-link
+          class="user_name"
+          :to="{ name: 'viewSurvey', params: { id: survey.id } }"
+          >{{ survey.name }}</router-link
         ></span
       >
     </v-col>
     <v-col cols="9" sm="2">
-      <v-btn size="x-small" icon="mdi-pencil" @click="updateUser" />
+      <v-btn size="x-small" icon="mdi-pencil" @click="updateSurvey" />
     </v-col>
     <v-col cols="9" sm="2">
-      <v-btn size="x-small" icon="mdi-trash-can" @click="deleteUser" />
+      <v-btn size="x-small" icon="mdi-trash-can" @click="deleteSurvey" />
     </v-col>
-    <v-col cols="9" sm="2">
+    <!-- <v-col cols="9" sm="2">
       <v-btn size="x-small" @click="sendEmail">Send</v-btn>
-    </v-col>
+    </v-col> -->
   </v-row>
 </template>
 
 <script>
 export default {
   props: {
-    user: Object,
+    survey: Object,
   },
   data() {
     return {};
   },
   methods: {
-    deleteUser() {
-      this.$emit("deleteUser");
+    deleteSurvey() {
+      this.$emit("deleteSurvey");
     },
-    updateUser() {
-      this.$emit("updateUser");
+    updateSurvey() {
+      this.$emit("updateSurvey");
     },
-    sendEmail(){
-      this.$emit('sendEmail');
+    sendEmail() {
+      this.$emit("sendEmail");
     },
   },
 };
