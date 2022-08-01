@@ -28,7 +28,7 @@ const routes = [
     component: () => import("./views/SuperAdmin/EditAdmin.vue"),
   },
   {
-    path: "/admindashboard/viewSurvey",
+    path: "/admindashboard/viewSurvey/:id",
     name: "viewSurvey",
     component: () => import("./views/Admin/ViewSurvey.vue"),
   },
@@ -41,6 +41,11 @@ const routes = [
     path: "/admindashboard",
     name: "admindashboard",
     component: () => import("./views/Admin/AdminDashboard.vue"),
+  },
+  {
+    path: "/admindashboard/surveyResponses",
+    name: "surveyResponse",
+    component: () => import("./views/Admin/SurveyResponses.vue"),
   },
 ];
 
