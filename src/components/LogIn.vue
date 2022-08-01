@@ -46,16 +46,25 @@ export default {
             this.$cookies.set('user', res.data.username);
             this.$cookies.set('role', res.data.role);
             this.$cookies.set('token', res.data.token);
+            this.$cookies.set('userID', res.data.id)
             if (res.data.role === 'SuperAdmin') {
                this.$router.push({ name: 'adminList' })
-               this.submitted = true;
-               this.user = {};
             }
+            else if(res.data.role === 'Admin')
+            {
+               this.$router.push({name: 'surveyForm'})
+            }
+            
          }).catch(err => {
             console.log(err);
             this.message = err.response.data;
          })
       },
+      clearFields(){
+         this.submitted = true;
+         this.user.email = '';
+         this.user.password = '';
+      }
    },
    mounted() {
    },
