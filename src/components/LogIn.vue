@@ -67,14 +67,22 @@ export default {
             this.submitted = true;
             this.user = {};
           }
+          else if(res.data.role === "Admin")
+          {
+             this.$router.push({ name: "surveyList"})
+             this.submitted = true;
+            this.user = {};
+          }
+            
         })
         .catch((err) => {
           console.log(err);
-          this.message = err.response.data;
+          this.message = err;
         });
-    },
-  },
-  mounted() {},
+      },
+   },
+   mounted() {},
+
 };
 </script>
 
