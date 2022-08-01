@@ -18,14 +18,20 @@
     <v-col cols="12" sm="2">
       <span class="text-h6">Delete</span>
     </v-col>
-    <!-- <v-col cols="12" sm="2">
-      <span class="text-h6">Email Customers</span>
-    </v-col> -->
-    <v-col cols="12" sm="2">
-      <v-btn class="btn btn-primary" @click="createNewSurvey"
-        >Create A New Survey</v-btn
-      >
-    </v-col>
+      <v-row>
+        <v-col cols="12" sm="4">
+        <v-btn class="btn btn-primary" @click="createSurveyBtn" v-if="!createSurveyIsActive">Create A Survey</v-btn>
+        </v-col>
+        <v-col cols="12" sm="7" v-if="createSurveyIsActive">
+          <v-row>
+            <v-text-field label="Survey name" v-model="surveyName"/>
+          </v-row>
+          <v-row>
+            <v-btn class="btn-primary" @click="addSurvey" style="margin-left:46px">Add Survey</v-btn>
+            <v-btn class="btn-danger" @click="cancel" style="margin-left:46px">Cancel</v-btn>
+          </v-row>
+        </v-col>
+      </v-row>
   </v-row>
   <SurveyList
     v-for="survey in surveys"
@@ -37,10 +43,8 @@
   />
 </template>
 <script>
-import UserDataService from "../../services/UserDataService";
 import SurveyDataService from "../../services/SurveyDataService";
 import SurveyList from "@/components/SurveyList.vue";
-import emailjs from "emailjs-com";
 
 export default {
   name: "survey-list",
@@ -50,17 +54,37 @@ export default {
       currentSurvey: null,
       currentIndex: -1,
       name: "",
+      surveyName: '',
+      createSurveyIsActive: false,
+      userID: null
     };
   },
   components: {
     SurveyList,
   },
   methods: {
-    async createNewSurvey() {
-      await this.$router.push({ name: "createSurvey" });
+    createSurveyBtn() {
+      this.createSurveyIsActive = true;
+    },
+    cancel(){
+      this.createSurveyIsActive = false;
+      this.surveyName = ''
     },
     goEdit(survey) {
       this.$router.push({ name: "viewSurvey", params: { id: survey.id } });
+    },
+    async addSurvey(){
+      const obj = {name: this.surveyName, userID: this.userID}
+      await SurveyDataService.createASurvey(obj).then((res) =>{
+        if(res.data){
+          this.refreshList();
+          this.resetFields();
+          this.cancel();
+          //this.$router.push({name: 'survey'})
+        }
+      }).catch(err => {
+        console.log(err.message)
+      })
     },
     goDelete(survey) {
       SurveyDataService.delete(survey.id)
@@ -71,19 +95,9 @@ export default {
           this.message = e.response.data.message;
         });
     },
-    // goSendEmail(user) {
-    //   var loginInfo = {
-    //     to_name: user.username,
-    //     from_name: "Survey Creator",
-    //     message: `your email: ${user.email}, your password: Survey`,
-    //   };
-    //   emailjs.send(
-    //     "service_survey",
-    //     "template_ah6dg3e",
-    //     loginInfo,
-    //     "yV9AlYGCoR5id2Enh"
-    //   );
-    // },
+    resetFields(){
+      this.surveyName = ''
+    },
     retrieveSurveys() {
       SurveyDataService.getAllSurveys(this.$cookies.get("userID"))
         .then((response) => {
@@ -129,6 +143,7 @@ export default {
   },
   mounted() {
     this.retrieveSurveys();
+    this.userID = this.$cookies.get('userID');
   },
 };
 </script>

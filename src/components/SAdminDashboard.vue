@@ -3,7 +3,6 @@
     <v-col cols="9" sm="3">
       <span
         ><router-link
-          class="user_name"
           :to="{ name: 'viewAdmin', params: { id: user.id } }"
           >{{ user.username }}</router-link
         ></span

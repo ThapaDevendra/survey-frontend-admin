@@ -60,28 +60,21 @@ export default {
       this.$cookies.remove('token')  // return this
       this.$cookies.remove('user')
       this.$cookies.remove('role')
-    }
+      this.$cookies.remove('userID')
+    },
   },
   watch: {
-    $route(to, from) {
-      if (to.path == '/super-admindashboard' && from.path == '/') {
+      $route(to, from){
+        if ((to.path == '/super-admindashboard' || to.path == '/admindashboard')  && from.path == '/') {
         this.username = this.$cookies.get('user');
         this.role =  this.$cookies.get('role');
       }
     }
   },
-  created() {
-
-  },
   component: {
     Login
-  },
-  mounted() {
-
-    console.log('this is data', this.username)
   }
-
-};
+ };
 </script>
 
 <style>
