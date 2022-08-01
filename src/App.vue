@@ -65,7 +65,7 @@ export default {
   },
   watch: {
       $route(to, from){
-        if ((to.path == '/super-admindashboard' || to.path == '/admindashboard')  && from.path == '/login') {
+        if ((to.path == '/super-admindashboard' || to.path == '/admindashboard')  && from.path == '/') {
         this.username = this.$cookies.get('user');
         this.role =  this.$cookies.get('role');
       }
