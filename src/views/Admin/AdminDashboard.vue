@@ -43,7 +43,7 @@
   />
 </template>
 <script>
-import SurveyDataService from "../../services/SurveyDataService";
+import SurveyDataService from "@/services/SurveyDataService";
 import SurveyList from "@/components/SurveyList.vue";
 
 export default {
@@ -77,11 +77,14 @@ export default {
       const obj = {name: this.surveyName, userID: this.userID}
       await SurveyDataService.createASurvey(obj).then((res) =>{
         if(res.data){
+          // this.$cookies.set('name',res.data.name);
+          // this.$cookies.set('id', res.data.id);
+          this.$router.push({name: 'newSurveyForm'})
           this.refreshList();
           this.resetFields();
           this.cancel();
-          //this.$router.push({name: 'survey'})
         }
+        return;
       }).catch(err => {
         console.log(err.message)
       })

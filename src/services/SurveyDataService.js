@@ -4,7 +4,7 @@ const { cookies } = useCookies();
 
 class SurveyDataService {
   getAllSurveys(userID) {
-    return http.get("/surveys/getAllSurveys/" + userID, {
+    return http.get(`/surveys/getAllSurveys/${userID}`, {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     });
   }
