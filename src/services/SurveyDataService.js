@@ -26,6 +26,12 @@ class SurveyDataService {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     });
   }
+
+    //create a survey
+    createASurvey(data){
+      return http.post('/surveys/', data);
+    }
+
     //create a question for a Survey
     createQuestion(surveyID, data){
       return http.post(`/surveyQuestion/${surveyID}`, data);
