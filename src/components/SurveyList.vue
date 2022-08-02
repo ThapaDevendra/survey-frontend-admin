@@ -4,7 +4,7 @@
       <span
         ><router-link
           class="user_name"
-          :to="{ name: 'viewSurvey', params: { id: survey.id } }"
+          :to="'/admindashboard/surveyForm/' + survey.id"
           >{{ survey.name }}</router-link
         ></span
       >
@@ -15,16 +15,14 @@
     <v-col cols="9" sm="2">
       <v-btn size="x-small" icon="mdi-trash-can" @click="deleteSurvey" />
     </v-col>
-    <!-- <v-col cols="9" sm="2">
-      <v-btn size="x-small" @click="sendEmail">Send</v-btn>
-    </v-col> -->
   </v-row>
 </template>
 
 <script>
+
 export default {
   props: {
-    survey: Object,
+    survey: Object
   },
   data() {
     return {};

@@ -1,12 +1,11 @@
 <template>
-    <p>{{surveyName}}</p>
+    <p>{{survey}}</p>
     <SurveyForm
         v-for="(item, index) in questions"
         :key="index"
         :question="item"
         :index="index"
     />
-    
        <v-row align="center">
                 <v-col cols="11" md="8">
                     <v-text-field
@@ -62,7 +61,7 @@
 
 <script>
 import SurveyForm from '@/components/SurveyForm.vue';
-
+import SurveyDataService from '@/services/SurveyDataService';
 export default{
     name: 'surveyQuestions',
     data(){
@@ -78,6 +77,9 @@ export default{
             booleanValue:'isTrue',
             newChoiceItem:'',
             emailsString:'',
+            email:{
+                respondentEmail: ''
+            },
             emails:[],
             questionTypes: [
                 {
@@ -108,18 +110,23 @@ export default{
             this.clearQuestionField();
         },
         sendASurveyQuestions(){
-            const surveyID = 2 //needs to have default surveyID
+            const surveyId = this.$route.params.surveyID;
             this.emails = this.emailsString.split(/[, ]+/g);
-            // SurveyService.createASurveyQuestions(surveyID, this.questions).then((data) => {
-            //     console.log(data);
-            // }).catch(err => {
-            //     console.log(err);
-            // })
-            // SurveyService.createRespondentsForASurvey(surveyID, this.emails).then((data) =>{
-            //     console.log(data);
-            // }).catch(err => {
-            //     console.log(err);
-            // })
+            const assignProperty = this.emails.map((data) =>{
+                return{respondentEmail: data}
+            })
+
+
+            console.log('respondents email', assignProperty);
+            const sendObj = {questions: this.questions, respondents: assignProperty}
+            // console.log('questions:', this.questions)
+            // console.log('emails;', this.emails)
+            // console.log('sendObj', sendObj)
+            SurveyDataService.createASurveyQuestions(surveyId, sendObj).then((data) => {
+                console.log(data);
+            }).catch(err => {
+                console.log(err);
+            })
             this.deleteAllFields();
         },
         cancel(){
