@@ -6,7 +6,7 @@ export default[
         component: () => import("@/views/Admin/AdminDashboard.vue"),
     },
     {
-        path: "/admindashboard/viewSurvey",
+        path: "/admindashboard/viewSurvey/:surveyID",
         name: "viewSurvey",
         component: () => import("@/views/Admin/ViewSurvey.vue"),
     },
@@ -17,9 +17,10 @@ export default[
         props: true,
     },
     {
-        path: "/admindashboard/surveyResponses",
-        name: "surveyResponse",
-        component: () => import("@/views/Admin/SurveyResponses.vue"),
+        path: "/admindashboard/viewResponses/:surveyID",
+        name: "viewResponses",
+        component: () => import("@/views/Admin/ViewResponses.vue"),
       },
+     
 ]
 

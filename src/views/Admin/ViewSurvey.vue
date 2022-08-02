@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     async surveyResponses() {
-      await this.$router.push({ name: "surveyResponse" });
+      await this.$router.push({ name: "viewResponses", params: {surveyID: this.$route.params.surveyID} });
     },
     // goSendEmail(user) {
     //   var loginInfo = {
@@ -53,7 +53,7 @@ export default {
     //   );
     // },
     retrieveQuestions() {
-      QuestionDataService.getAllQuestions(this.$route.params.id)
+      QuestionDataService.getAllQuestions(this.$route.params.surveyID)
         .then((response) => {
         console.log(response.data);
           this.questions = response.data;
@@ -63,7 +63,7 @@ export default {
         });
     },
     retrieveCurrentSurvey(){
-        SurveyDataService.findOne(this.$route.params.id)
+        SurveyDataService.findOne(this.$route.params.surveyID)
             .then((response)=>{this.survey=response.data})
             .catch((e) => {
           this.message = e.response.data.message;

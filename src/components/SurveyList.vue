@@ -4,7 +4,7 @@
       <span
         ><router-link
           class="user_name"
-          :to="{ name: 'viewSurvey', params: { id: survey.id } }"
+          :to="{ name: 'viewSurvey', params: { surveyID: survey.id } }"
           >{{ survey.name }}</router-link
         ></span
       >
