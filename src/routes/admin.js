@@ -15,5 +15,12 @@ export default[
         name: "newSurveyForm",
         component: () => import("@/views/Admin/createSurveyQuestions.vue"),
         props: true,
+    },
+    {
+        //respondent survey form
+        path: "/surveyForm",
+        name: "respondentSurveyForm",
+        component: () => import("@/views/Admin/RespondentSurveyForm.vue"),
     }
+
 ]
