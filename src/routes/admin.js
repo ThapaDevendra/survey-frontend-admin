@@ -9,10 +9,10 @@ export default[
         path: "/admindashboard/viewSurvey",
         name: "viewSurvey",
         component: () => import("@/views/Admin/ViewSurvey.vue"),
-    },
-    {
-        path: "/admindashboard/surveyForm",
-        name: "newSurveyForm",
-        component: () => import("@/views/Admin/CreateASurveyForm.vue"),
     }
+//     {
+//         path: "/admindashboard/surveyForm",
+//         name: "newSurveyForm",
+//         component: () => import("@/views/Admin/CreateASurveyForm.vue"),
+//     }
 ]
