@@ -13,7 +13,7 @@
       <span class="text-h6">Name</span>
     </v-col>
     <v-col cols="12" sm="2">
-      <span class="text-h6">Edit</span>
+      <span class="text-h6">Survey Detail</span>
     </v-col>
     <v-col cols="12" sm="2">
       <span class="text-h6">Delete</span>

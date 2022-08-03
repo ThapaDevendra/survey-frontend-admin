@@ -6,7 +6,8 @@
         :question="item"
         :index="index"
     />
-       <v-row align="center">
+    <div v-if="!isCompleted">
+        <v-row align="center">
                 <v-col cols="11" md="8">
                     <v-text-field
                         v-model=question.text
@@ -56,7 +57,7 @@
                 <v-btn @click="cancel" class="btn btn-danger">Cancel</v-btn>
             </v-col>
             </v-row>
-            
+    </div>            
 </template>
 
 <script>
@@ -71,6 +72,7 @@ export default{
                 questionType: null,
                 multipleChoices: []
             },
+            isCompleted: false,
             surveyID: null,
             surveyName: 'dsfasdfasdfas',
             questions:[ ],
@@ -116,12 +118,7 @@ export default{
                 return{respondentEmail: data}
             })
 
-
-            console.log('respondents email', assignProperty);
             const sendObj = {questions: this.questions, respondents: assignProperty}
-            // console.log('questions:', this.questions)
-            // console.log('emails;', this.emails)
-            // console.log('sendObj', sendObj)
             SurveyDataService.createASurveyQuestions(surveyId, sendObj).then((data) => {
                 console.log(data);
             }).catch(err => {
@@ -146,6 +143,15 @@ export default{
             this.deleteAllFields();
         },
     },
+    mounted(){
+       SurveyDataService.getAllQuestionsOfASurvey(this.$route.params.surveyID).then((res) => {
+         if(res.data){
+            this.questions = res.data;
+            this.isCompleted = true;
+            console.log('these are questions', this.questions)
+         }
+       }) 
+    }
 };
  
 </script>
