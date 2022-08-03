@@ -4,13 +4,34 @@
         </v-layout>
         <v-card class='mx-auto' width="800">
             <v-card-text v-if="!submitted">
-                <v-form>
-
-                    <h4 style='color:black'>Respondent form</h4>
-
+                <div>
+                    <h1>{{this.surveyName}}</h1>
+                </div>
+                <v-spacer></v-spacer>
+                <div class="body">
+                    <v-form v-for="(question, queIndex) in questions">
+                    <div>
+                        <span class="text-h6">{{question.text}}</span>
+                        <p>{{queIndex}}</p>
+                    </div>
+                    <div>
+                        <v-text-field v-if="question.questionType === 0" v-model="shortAnswer" v-bind:key="queIndex"/>
+                        <v-checkbox v-if="question.questionType === 1"
+                            v-for="(item, index) in question.multipleChoices"                                
+                            v-bind:key="index"
+                            v-model="selectedChoice"
+                        >
+                        {{item}}
+                        </v-checkbox>
+                        <v-radio-group v-if="question.questionType === 2" v-model="booleanValue">
+                            <v-radio name="True" label="True" value="isTrue"/>
+                            <v-radio name="False" label="False" value="isFalse"/>
+                        </v-radio-group>
+                    </div>
+                    </v-form>
+                </div>
                     <button class="btn btn-primary" @click="submitResponse" style="margin-right:16px">Submit</button>
-                    <button class="btn btn-danger" @click="goAdminDashboard" style="margin-left:16px">Cancel</button>
-                </v-form>
+                    <button class="btn btn-danger" @click="reset" style="margin-left:16px">Reset</button>
             </v-card-text>
         </v-card>
     </v-container>
@@ -19,10 +40,18 @@
 
 
 <script>
+import SurveyDataService from '@/services/SurveyDataService'
+
 export default{
     name: 'surveyForm',
     data(){
         return{
+            surveyName: '',
+            questions: [],
+            shortAnswer: '',
+            booleanValue: "isTrue",
+            selectedChoice: '',
+            selectedChoices: [],
             submitted: false,
             survey: {
                 id: null,
@@ -44,6 +73,35 @@ export default{
                 }
             ]
         }
+    },
+    methods:{
+        cancel(){
+
+        },
+        resetFields(){
+            this.booleanValue= "isTrue";
+        }
+    },
+    mounted(){
+        const surveyID = 3
+        SurveyDataService.getAllQuestionsOfASurvey(surveyID).then((res) => {
+         if(res.data){
+            this.questions = res.data;
+            console.log('these are questions', this.questions)
+            SurveyDataService.get(surveyID).then((res) => {
+                this.surveyName = res.data.name;
+            }).catch(err => {
+                console.lot(err.message)
+            })
+         }
+       }).catch(err => {
+        console.log(err.message)
+       }) 
     }
 }
 </script>
+<style>
+.body{
+    margin-top:40px;
+}
+</style>
