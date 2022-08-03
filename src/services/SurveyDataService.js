@@ -26,6 +26,11 @@ class SurveyDataService {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     });
   }
+  findOne(id) {
+    return http.get(`/surveys/${id}`, {
+      headers: { Authorization: `Bearer ${cookies.get("token")}` },
+    });
+  }
 
     //create a survey
     createASurvey(data){
