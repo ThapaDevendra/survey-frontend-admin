@@ -9,27 +9,39 @@
     </v-col>
   </v-row>
   <v-row>
-    <v-col cols="12" sm="3">
+    <v-col cols="12" sm="2">
       <span class="text-h6">Name</span>
     </v-col>
     <v-col cols="12" sm="2">
-      <span class="text-h6">Edit</span>
+      <span class="text-h6">Survey Details</span>
+    </v-col>
+     <v-col cols="12" sm="2">
+      <span class="text-h6">Edit Name</span>
     </v-col>
     <v-col cols="12" sm="2">
       <span class="text-h6">Delete</span>
     </v-col>
       <v-row>
-        <v-col cols="12" sm="4">
-        <v-btn class="btn btn-primary" @click="createSurveyBtn" v-if="!createSurveyIsActive">Create A Survey</v-btn>
-        </v-col>
-        <v-col cols="12" sm="7" v-if="createSurveyIsActive">
+        <v-col cols="9" >
+          <v-btn class="btn btn-primary" @click="createSurveyBtn" v-if="!createSurveyIsActive && !editMode">Create A Survey</v-btn>
+        <div v-if="createSurveyIsActive && !editMode">
           <v-row>
             <v-text-field label="Survey name" v-model="surveyName"/>
           </v-row>
           <v-row>
-            <v-btn class="btn-primary" @click="addSurvey" style="margin-left:46px">Add Survey</v-btn>
-            <v-btn class="btn-danger" @click="cancel" style="margin-left:46px">Cancel</v-btn>
+            <v-btn class="btn-primary" @click="addSurvey" style="margin-left:16px">Add Survey</v-btn>
+            <v-btn class="btn-danger" @click="cancel" style="margin-left:16px">Cancel</v-btn>
           </v-row>
+        </div>
+        <div v-if="editMode">
+          <v-row>
+              <v-text-field label="Edit Survey name" v-model="editSurveyName"/>
+          </v-row>
+          <v-row>
+             <v-btn class="btn-primary" @click="editSurvey" style="margin-left:16px">Edit Survey</v-btn>
+            <v-btn class="btn-danger" @click="cancelEdit" style="margin-left:16px">Cancel</v-btn>
+          </v-row>
+        </div>
         </v-col>
       </v-row>
   </v-row>
@@ -43,7 +55,7 @@
   />
 </template>
 <script>
-import SurveyDataService from "../../services/SurveyDataService";
+import SurveyDataService from "@/services/SurveyDataService";
 import SurveyList from "@/components/SurveyList.vue";
 
 export default {
@@ -56,7 +68,11 @@ export default {
       name: "",
       surveyName: '',
       createSurveyIsActive: false,
-      userID: null
+      userID: null,
+      surveyId: null,
+      editMode: false,
+      editSurveyName:'',
+      editSurveyId: null
     };
   },
   components: {
@@ -71,25 +87,42 @@ export default {
       this.surveyName = ''
     },
     goEdit(survey) {
-      this.$router.push({ name: "viewSurvey", params: { id: survey.id } });
+      this.editMode = true;
+      this.editSurveyName = survey.name;
+      this.editSurveyid = survey.id;
+    },
+    editSurvey(){
+          this.surveys.map((obj) => {
+          if(obj.id === this.editSurveyid){
+              SurveyDataService.update(obj.id, {name: this.editSurveyName}).then((res)=> {
+                 this.refreshList();
+              }).catch(err => {
+                console.log(err.msg);
+              })
+          }
+      })        
+        this.cancelEdit();
+    },
+    cancelEdit(){
+      this.editMode = false;
+      this.editSurveyName = '';
+      this.editSurveyid = null;
     },
     async addSurvey(){
-      const obj = {name: this.surveyName, userID: this.userID}
-      await SurveyDataService.createASurvey(obj).then((res) =>{
-        if(res.data){
-          this.refreshList();
-          this.resetFields();
-          this.cancel();
-          //this.$router.push({name: 'survey'})
-        }
-      }).catch(err => {
-        console.log(err.message)
-      })
+        const obj = {name: this.surveyName, userID: this.userID}
+          await SurveyDataService.createASurvey(obj).then((res) =>{
+          }).catch(err => {
+            console.log(err.message)
+          })
+        this.refreshList();
+        this.resetFields();
+        this.cancel();
+        this.createSurveyIsActive = false;
     },
-    goDelete(survey) {
-      SurveyDataService.delete(survey.id)
-        .then(() => {
-          this.retrieveSurveys();
+    async goDelete(survey) {
+     await SurveyDataService.delete(survey.id)
+        .then((res) => {
+           this.refreshList();
         })
         .catch((e) => {
           this.message = e.response.data.message;

@@ -4,7 +4,7 @@ const { cookies } = useCookies();
 
 class SurveyDataService {
   getAllSurveys(userID) {
-    return http.get("/surveys/getAllSurveys/" + userID, {
+    return http.get(`/surveys/getAllSurveys/${userID}`, {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     });
   }
@@ -12,7 +12,7 @@ class SurveyDataService {
     return http.get(`/surveys/search/${name}`);
   }
   update(id, data) {
-    return http.post(`/surveys/${id}`, data, {
+    return http.put(`/surveys/${id}`, data, {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     });
   }
@@ -37,24 +37,19 @@ class SurveyDataService {
       return http.post('/surveys/', data);
     }
 
-    //create a question for a Survey
+    //create a question a Survey
     createQuestion(surveyID, data){
       return http.post(`/surveyQuestion/${surveyID}`, data);
   }
 
-    //create all questions for a Survey
-    createASurveyQuestions(surveyID, data){
-      return http.post(`surveyQuestion/survey/${surveyID}`, data)
+    //create all questions for a Survey with respondents
+    createASurveyQuestions(surveyId, data){
+      return http.post(`/surveyQuestion/survey/${surveyId}`, data)
   }
 
     //get all questions of a Survey
     getAllQuestionsOfASurvey(surveyID){
       return http.get(`/surveyQuestion/survey/${surveyID}`)
-  }
-
-    //create respondents for a survey
-    createRespondentsForASurvey(surveyID, data){
-      return http.post(`/surveyQuestion/${surveyID}/respondents`, data);
   }
 
 }

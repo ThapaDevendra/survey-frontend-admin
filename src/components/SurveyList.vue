@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="9" sm="3">
+    <v-col cols="12" sm="2">
       <span
         ><router-link
           class="user_name"
@@ -10,21 +10,28 @@
       >
     </v-col>
     <v-col cols="9" sm="2">
-      <v-btn size="x-small" icon="mdi-pencil" @click="updateSurvey" />
+      <span
+        ><router-link
+          class="user_name"
+          :to="'/admindashboard/surveyForm/' + survey.id"
+          ><v-btn size="x-small" icon="mdi-plus"/></router-link
+        ></span
+      >
+    </v-col>
+    <v-col cols="9" sm="2">  
+          <v-btn size="x-small" icon="mdi-pencil" @click="updateSurvey" />
     </v-col>
     <v-col cols="9" sm="2">
       <v-btn size="x-small" icon="mdi-trash-can" @click="deleteSurvey" />
     </v-col>
-    <!-- <v-col cols="9" sm="2">
-      <v-btn size="x-small" @click="sendEmail">Send</v-btn>
-    </v-col> -->
   </v-row>
 </template>
 
 <script>
+
 export default {
   props: {
-    survey: Object,
+    survey: Object
   },
   data() {
     return {};
