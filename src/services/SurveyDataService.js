@@ -12,7 +12,7 @@ class SurveyDataService {
     return http.get(`/surveys/search/${name}`);
   }
   update(id, data) {
-    return http.post(`/surveys/${id}`, data, {
+    return http.put(`/surveys/${id}`, data, {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     });
   }
@@ -22,6 +22,11 @@ class SurveyDataService {
     });
   }
   get(id) {
+    return http.get(`/surveys/${id}`, {
+      headers: { Authorization: `Bearer ${cookies.get("token")}` },
+    });
+  }
+  findOne(id) {
     return http.get(`/surveys/${id}`, {
       headers: { Authorization: `Bearer ${cookies.get("token")}` },
     });
@@ -46,11 +51,6 @@ class SurveyDataService {
     getAllQuestionsOfASurvey(surveyID){
       return http.get(`/surveyQuestion/survey/${surveyID}`)
   }
-
-    //create respondents for a survey
-  //   createRespondentsForASurvey(surveyID, data){
-  //     return http.post(`/surveyQuestion/${surveyID}/respondents`, data);
-  // }
 
 }
 export default new SurveyDataService();

@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="9" sm="3">
+    <v-col cols="12" sm="2">
       <span
         ><router-link
           class="user_name"
@@ -17,6 +17,9 @@
           ><v-btn size="x-small" icon="mdi-plus"/></router-link
         ></span
       >
+    </v-col>
+    <v-col cols="9" sm="2">  
+          <v-btn size="x-small" icon="mdi-pencil" @click="updateSurvey" />
     </v-col>
     <v-col cols="9" sm="2">
       <v-btn size="x-small" icon="mdi-trash-can" @click="deleteSurvey" />

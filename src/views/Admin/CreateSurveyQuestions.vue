@@ -52,12 +52,15 @@
             <v-text-field label="Respondent Emails" v-model = "emailsString"></v-text-field> 
             </v-col>
             <v-col cols="6" sm="6">
-                <v-btn class="btn btn-primary"  @click="sendASurveyQuestions" style="margin-right:16px">Send Survey</v-btn>
+                <v-btn class="btn btn-primary"  @click="saveSurveyQuestions" style="margin-right:16px">Save Survey</v-btn>
                 <v-btn @click="removeAllQuestions" style="margin-right:16px" class="btn btn-secondary">Remove All</v-btn>
                 <v-btn @click="cancel" class="btn btn-danger">Cancel</v-btn>
             </v-col>
             </v-row>
-    </div>            
+    </div>  
+    <div v-else>
+        <v-btn @click="cancel" class="btn btn-danger">Return</v-btn>
+    </div>          
 </template>
 
 <script>
@@ -111,7 +114,7 @@ export default{
             this.questions.push(this.question);
             this.clearQuestionField();
         },
-        sendASurveyQuestions(){
+        saveSurveyQuestions(){
             const surveyId = this.$route.params.surveyID;
             this.emails = this.emailsString.split(/[, ]+/g);
             const assignProperty = this.emails.map((data) =>{
@@ -124,7 +127,7 @@ export default{
             }).catch(err => {
                 console.log(err);
             })
-            this.deleteAllFields();
+            this.cancel();
         },
         cancel(){
             this.clearQuestionField();

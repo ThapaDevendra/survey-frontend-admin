@@ -9,7 +9,7 @@
       >
     </v-col>
     <v-col cols="9" sm="2">
-      <v-btn size="x-small" icon="mdi-plus" @click="updateUser" />
+      <v-btn size="x-small" icon="mdi-pencil" @click="updateUser" />
     </v-col>
     <v-col cols="9" sm="2">
       <v-btn size="x-small" icon="mdi-trash-can" @click="deleteUser" />
