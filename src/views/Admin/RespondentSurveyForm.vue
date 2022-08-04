@@ -9,13 +9,13 @@
                 </div>
                 <v-spacer></v-spacer>
                 <div class="body">
-                    <v-form v-for="(question, queIndex) in questions">
+                    <v-form v-for="(question, index) in questions" :key="index">
                     <div>
                         <span class="text-h6">{{question.text}}</span>
-                        <p>{{queIndex}}</p>
+                        <p>{{question.surveyId}}</p>
                     </div>
                     <div>
-                        <v-text-field v-if="question.questionType === 0" v-model="shortAnswer" v-bind:key="queIndex"/>
+                        <v-text-field v-if="question.questionType === 0" v-model="surveyName"   />
                         <v-checkbox v-if="question.questionType === 1"
                             v-for="(item, index) in question.multipleChoices"                                
                             v-bind:key="index"
@@ -53,6 +53,7 @@ export default{
             selectedChoice: '',
             selectedChoices: [],
             submitted: false,
+            response:[],
             survey: {
                 id: null,
                 questions: [],
@@ -75,6 +76,9 @@ export default{
         }
     },
     methods:{
+        submitResponse(){
+            console.log('this is answer', this.response)
+        },
         cancel(){
 
         },
