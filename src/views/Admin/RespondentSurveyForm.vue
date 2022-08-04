@@ -7,26 +7,29 @@
                 <div>
                     <h1>{{this.surveyName}}</h1>
                 </div>
-                <v-spacer></v-spacer>
                 <div class="body">
-                    <v-form v-for="(question, index) in questions" :key="index">
-                    <div>
-                        <span class="text-h6">{{question.text}}</span>
-                        <p>{{question.surveyId}}</p>
-                    </div>
-                    <div>
-                        <v-text-field v-if="question.questionType === 0" v-model="surveyName"   />
-                        <v-checkbox v-if="question.questionType === 1"
-                            v-for="(item, index) in question.multipleChoices"                                
-                            v-bind:key="index"
-                            v-model="selectedChoice"
-                        >
-                        {{item}}
-                        </v-checkbox>
-                        <v-radio-group v-if="question.questionType === 2" v-model="booleanValue">
-                            <v-radio name="True" label="True" value="isTrue"/>
-                            <v-radio name="False" label="False" value="isFalse"/>
-                        </v-radio-group>
+                    <v-form>
+                        <div v-for="(question, index) in questions" :key="question.id">
+                        <div>
+                            <span class="text-h6">{{question.text}}</span>
+                            <p>{{question.id}}</p>
+                        </div>
+                        <div>
+                            <v-text-field v-if="question.questionType === 0" :key="question.id" v-model="textFieldAnswer"/>
+                            <!-- <v-for="(item, index) in question.multipleChoices" v-if="question.questionType === 1">
+                                 {{item}}</v-for> -->
+                            <v-checkbox v-if="question.questionType === 1" 
+                                v-for="(item, index) in question.multipleChoices"   
+                                v-model="choiceItem"
+                                :key="question.id"
+                            >
+                                {{item}}
+                            </v-checkbox>
+                            <v-radio-group v-if="question.questionType === 2" :key="question.id" v-model="booleanAnswer">
+                                <v-radio name="isTrue" label="True" value="True"/>
+                                <v-radio name="isFalse" label="False" value="False"/>
+                            </v-radio-group>
+                        </div>
                     </div>
                     </v-form>
                 </div>
@@ -46,19 +49,26 @@ export default{
     name: 'surveyForm',
     data(){
         return{
-            surveyName: '',
-            questions: [],
-            shortAnswer: '',
-            booleanValue: "isTrue",
-            selectedChoice: '',
-            selectedChoices: [],
+            textFieldAnswer: '',
+            booleanAnswer:'',
+            choiceItem:'',
+            selectedChoiceItems:[],
             submitted: false,
-            response:[],
-            survey: {
-                id: null,
-                questions: [],
-                questionType: null,
+            surveyID: null,
+            surveyName: '',
+            questions:[ ],
+            answerArray:[],
+            answer:{
+                questionId: null,
+                answerToQuestion: '',
             },
+            choiceItem:'',
+            
+            emailsString:'',
+            email:{
+                respondentEmail: ''
+            },
+            emails:[],
             questionTypes: [
                 {
                     id: 0,
@@ -76,8 +86,21 @@ export default{
         }
     },
     methods:{
+        multipleChoiceItem(){
+
+        },
+        getInputValue(){
+            this.
+            console.log()
+        },
+        isChecked(item){
+            console.log('this item is selectd',item)
+        },
         submitResponse(){
-            console.log('this is answer', this.response)
+            console.log('this is answer', this.textFieldAnswer)
+            console.log('this is answer', this.booleanAnswer)
+            console.log('this is answer', this.selectedChoiceItems)
+
         },
         cancel(){
 
