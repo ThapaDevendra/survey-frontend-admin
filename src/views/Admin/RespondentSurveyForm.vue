@@ -16,18 +16,18 @@
                         </div>
                         <div>
                             <v-text-field v-if="question.questionType === 0" :key="question.id" v-model="textFieldAnswer"/>
-                            <!-- <v-for="(item, index) in question.multipleChoices" v-if="question.questionType === 1">
-                                 {{item}}</v-for> -->
+                            <div> {{selectedChoiceItems}}</div>
                             <v-checkbox v-if="question.questionType === 1" 
                                 v-for="(item, index) in question.multipleChoices"   
-                                v-model="choiceItem"
+                                v-model="selectedChoiceItems"
+                                :value=item
                                 :key="question.id"
                             >
                                 {{item}}
                             </v-checkbox>
-                            <v-radio-group v-if="question.questionType === 2" :key="question.id" v-model="booleanAnswer">
-                                <v-radio name="isTrue" label="True" value="True"/>
-                                <v-radio name="isFalse" label="False" value="False"/>
+                            <v-radio-group v-if="question.questionType === 2" :key="question.id" v-model="booleanAnswer" >
+                                <div> {{booleanAnswer}}</div>
+                                <v-radio v-for="option in options" :key=option.id :label=option.label :value= option.value></v-radio>
                             </v-radio-group>
                         </div>
                     </div>
@@ -49,6 +49,7 @@ export default{
     name: 'surveyForm',
     data(){
         return{
+            options:[{id: 0, label: 'True', value: 'True'},{id: 1, label: 'False', value: 'False'}],
             textFieldAnswer: '',
             booleanAnswer:'',
             choiceItem:'',
@@ -97,9 +98,9 @@ export default{
             console.log('this item is selectd',item)
         },
         submitResponse(){
-            console.log('this is answer', this.textFieldAnswer)
-            console.log('this is answer', this.booleanAnswer)
-            console.log('this is answer', this.selectedChoiceItems)
+            console.log('this is input text', this.textFieldAnswer)
+            console.log('this is boolean answer', this.booleanAnswer)
+            console.log('this is multiple check answer', this.selectedChoiceItems)
 
         },
         cancel(){
@@ -108,6 +109,9 @@ export default{
         resetFields(){
             this.booleanValue= "isTrue";
         }
+    },
+    computed:{
+       
     },
     mounted(){
         const surveyID = 3
