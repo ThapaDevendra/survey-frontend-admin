@@ -9,32 +9,34 @@
                 </div>
                 <div class="body">
                     <v-form>
-                        <div v-for="(question, index) in questions" :key="question.id">
+                        <div v-for="(question, index) in questions" :key="index">
                         <div>
                             <span class="text-h6">{{question.text}}</span>
-                            <p>{{question.id}}</p>
                         </div>
                         <div>
-                            <v-text-field v-if="question.questionType === 0" :key="question.id" v-model="textFieldAnswer"/>
-                            <div> {{selectedChoiceItems}}</div>
+                            <v-text-field v-if="question.questionType === 0"  v-model="question.answer"/>
+                              <!-- <div v-if="question.questionType === 1" >
+                                <div v-for="choice in question.multipleChoices" >
+                                    <label>{{choice}}</label>
+                                    <input type="checkbox" :value="choice" v-model="question.checkedItems" />
+                                </div>
+   	                            <br />
+	                        </div> -->
                             <v-checkbox v-if="question.questionType === 1" 
-                                v-for="(item, index) in question.multipleChoices"   
-                                v-model="selectedChoiceItems"
+                                v-for="(item, index) in question.multipleChoices"  
                                 :value=item
-                                :key="question.id"
+                                v-model = "checkedItems"
                             >
-                                {{item}}
-                            </v-checkbox>
-                            <v-radio-group v-if="question.questionType === 2" :key="question.id" v-model="booleanAnswer" >
-                                <div> {{booleanAnswer}}</div>
-                                <v-radio v-for="option in options" :key=option.id :label=option.label :value= option.value></v-radio>
+                                {{item}}</v-checkbox>
+                            <v-radio-group v-if="question.questionType === 2"  v-model="question.answer">
+                                <v-radio name="True" label="True" value="True"></v-radio>
+                                <v-radio name="False" label="False" value="False"></v-radio>
                             </v-radio-group>
                         </div>
                     </div>
                     </v-form>
                 </div>
                     <button class="btn btn-primary" @click="submitResponse" style="margin-right:16px">Submit</button>
-                    <button class="btn btn-danger" @click="reset" style="margin-left:16px">Reset</button>
             </v-card-text>
         </v-card>
     </v-container>
@@ -44,27 +46,21 @@
 
 <script>
 import SurveyDataService from '@/services/SurveyDataService'
+import SurveyResponseDataService from '@/services/SurveyResponseDataService'
 
 export default{
     name: 'surveyForm',
     data(){
         return{
-            options:[{id: 0, label: 'True', value: 'True'},{id: 1, label: 'False', value: 'False'}],
-            textFieldAnswer: '',
-            booleanAnswer:'',
-            choiceItem:'',
-            selectedChoiceItems:[],
             submitted: false,
             surveyID: null,
             surveyName: '',
-            questions:[ ],
-            answerArray:[],
+            questions:[],
+            checkedItems:[],
             answer:{
                 questionId: null,
                 answerToQuestion: '',
             },
-            choiceItem:'',
-            
             emailsString:'',
             email:{
                 respondentEmail: ''
@@ -87,34 +83,29 @@ export default{
         }
     },
     methods:{
-        multipleChoiceItem(){
-
-        },
-        getInputValue(){
-            this.
-            console.log()
-        },
-        isChecked(item){
-            console.log('this item is selectd',item)
-        },
         submitResponse(){
-            console.log('this is input text', this.textFieldAnswer)
-            console.log('this is boolean answer', this.booleanAnswer)
-            console.log('this is multiple check answer', this.selectedChoiceItems)
-
+            const respondentId = this.$route.params.respondentID;
+            const surveyId = this.$route.params.surveyID;
+            // console.log(this.checkedItems)
+            // console.log('this is answer', this.questions)
+            //console.log('this is answer', respondentID)
+            const responses = this.questions.map((obj) => {
+                if(obj.multipleChoices.length > 1){
+                    return {questionId: obj.id, answer: this.checkedItems.toString()}
+                }else{
+                   return {questionId: obj.id, answer: obj.answer} 
+                }             
+            })
+            SurveyResponseDataService.createSurveyResponse( surveyId, respondentId, responses).catch(err => {
+                console.log(err.message)
+            })
         },
-        cancel(){
-
-        },
-        resetFields(){
-            this.booleanValue= "isTrue";
-        }
     },
     computed:{
-       
+       // router.post('/:surveyId/responses/:respondentId', survey_response.create);
     },
     mounted(){
-        const surveyID = 3
+        const surveyID = this.$route.params.surveyID;
         SurveyDataService.getAllQuestionsOfASurvey(surveyID).then((res) => {
          if(res.data){
             this.questions = res.data;

@@ -151,7 +151,6 @@ export default{
          if(res.data){
             this.questions = res.data;
             this.isCompleted = true;
-            console.log('these are questions', this.questions)
          }
        }) 
     }

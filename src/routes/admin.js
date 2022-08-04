@@ -23,7 +23,7 @@ export default[
     },
     {
         //respondent survey form
-        path: "/surveyForm",
+        path: "/:surveyID/surveyForm/respondent/:respondentID",
         name: "respondentSurveyForm",
         component: () => import("@/views/Admin/RespondentSurveyForm.vue"),
     }
