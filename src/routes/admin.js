@@ -22,7 +22,6 @@ export default[
         component: () => import("@/views/Admin/SurveyResponses.vue"),
     },
     {
-        //respondent survey form
         path: "/:surveyID/surveyForm/respondent/:respondentID",
         name: "respondentSurveyForm",
         component: () => import("@/views/Admin/RespondentSurveyForm.vue"),
