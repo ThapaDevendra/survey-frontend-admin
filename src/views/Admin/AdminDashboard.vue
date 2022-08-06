@@ -1,5 +1,5 @@
 <template>
-  <h1>Survey List</h1>
+  <h1>Survey's Lists</h1>
   <v-row>
     <v-col cols="12" sm="2">
       <v-btn color="success" @click="searchSurveys"> Search </v-btn>
