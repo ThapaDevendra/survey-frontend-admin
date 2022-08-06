@@ -18,16 +18,22 @@ export default[
     },
     
     {
-        //respondent survey form
         path: "/:surveyID/surveyForm/respondent/:respondentID",
         name: "respondentSurveyForm",
         component: () => import("@/views/Admin/RespondentSurveyForm.vue"),
     },
+  
     {
-    path: "/admindashboard/viewResponses/:surveyID",
-    name: "viewResponses",
-    component: () => import("@/views/Admin/ViewResponses.vue"),
-  },
+
+        path: "/admindashboard/viewResponses/:surveyID",
+        name: "viewResponses",
+        component: () => import("@/views/Admin/ViewResponses.vue"),
+    },
+    {
+        path: "/admindashboard/viewResponses/:surveyID",
+        name: "viewResponses",
+        component: () => import("@/views/Admin/ViewResponses.vue"),
+    }
 
 ]
 
