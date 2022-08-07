@@ -16,7 +16,7 @@ export default[
         props: true,
     },
     {
-        path: "/:surveyID/surveyForm/respondent/:respondentID",
+        path: "/survey/:surveyID/surveyForm/respondent/:respondentID",
         name: "respondentSurveyForm",
         component: () => import("@/views/Admin/RespondentSurveyForm.vue"),
     },
