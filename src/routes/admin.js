@@ -1,5 +1,4 @@
 export default[
-
     {
         path: "/admindashboard",
         name: "surveyList",
@@ -16,15 +15,12 @@ export default[
         component: () => import("@/views/Admin/CreateSurveyQuestions.vue"),
         props: true,
     },
-    
     {
         path: "/:surveyID/surveyForm/respondent/:respondentID",
         name: "respondentSurveyForm",
         component: () => import("@/views/Admin/RespondentSurveyForm.vue"),
     },
-  
     {
-
         path: "/admindashboard/viewResponses/:surveyID",
         name: "viewResponses",
         component: () => import("@/views/Admin/ViewResponses.vue"),
@@ -34,6 +30,5 @@ export default[
         name: "viewResponses",
         component: () => import("@/views/Admin/ViewResponses.vue"),
     }
-
 ]
 
