@@ -14,7 +14,6 @@
 </template>
 <script>
 import SurveyDataService from "../../services/SurveyDataService";
-import QuestionDataService from "../../services/QuestionDataService";
 import QuestionList from "@/components/QuestionList.vue";
 //import emailjs from "emailjs-com";
 
@@ -53,7 +52,7 @@ export default {
     //   );
     // },
     retrieveQuestions() {
-      QuestionDataService.getAllQuestions(this.$route.params.surveyID)
+      SurveyDataService.getAllQuestionsOfASurvey(this.$route.params.surveyID)
         .then((response) => {
         console.log(response.data);
           this.questions = response.data;
